@@ -1,0 +1,157 @@
+﻿<Window x:Class="ImageProcessing.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ImageProcessing"
+        xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800"
+        KeyUp="Window_KeyUp"
+        Closed="Window_Closed">
+    <DockPanel FlowDirection="RightToLeft">
+        <StatusBar Visibility="Hidden" DockPanel.Dock="Bottom" Height="Auto">
+            <StatusBarItem>
+                آماده
+            </StatusBarItem>
+            <StatusBarItem>
+                برای کار
+            </StatusBarItem>
+            <ProgressBar Width="100" Height="10px"/>
+        </StatusBar>
+        <Menu DockPanel.Dock="Top" FlowDirection="RightToLeft">
+            <MenuItem>
+                <MenuItem.Header>
+                    فایل
+                </MenuItem.Header>
+                <MenuItem Click="ImageSelectClick">
+                    <MenuItem.Header>
+                        بازکردن تصویر
+                    </MenuItem.Header>
+                </MenuItem>
+                <MenuItem Click="OnSaveClick">
+                    <MenuItem.Header>
+                        ذخیره تصویر
+                    </MenuItem.Header>
+                </MenuItem>
+
+            </MenuItem>
+            <MenuItem>
+                <MenuItem.Header>
+                    <Label>
+                        <Label.Foreground>
+                            <LinearGradientBrush>
+                                <GradientStop Color="Red" Offset="0"/>
+                                <GradientStop Color="Blue" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Label.Foreground>
+                        نما
+                    </Label>
+                </MenuItem.Header>
+                <MenuItem Click="OnEffectsClick">
+                    <MenuItem.Header>
+                        افکت ها
+                    </MenuItem.Header>
+                </MenuItem>
+            </MenuItem>
+            
+        </Menu>
+        <Grid Margin="10 10 10 10">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto" MinWidth="300px"/>
+            </Grid.ColumnDefinitions>
+            <WindowsFormsHost Name="host" HorizontalAlignment="Center" VerticalAlignment="Center"  Grid.Row="0" Grid.RowSpan="2">
+                <wf:PictureBox SizeMode="AutoSize"/>
+            </WindowsFormsHost>
+            <ScrollViewer Grid.Column="1" Grid.Row="0" >
+                <StackPanel  MaxWidth="250px" FlowDirection="RightToLeft">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition x:Name="secendColu"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0">پردازش گر</Label>
+                        <ComboBox Grid.Row="0" Grid.Column="1" x:Name="modeCombo" SelectionChanged="OnEffectSelect">
+
+                        </ComboBox>
+                        <Label Grid.Row="1" >
+                            <Label.Content>
+                                توضیحات
+                            </Label.Content>
+                        </Label>
+                        <TextBlock TextWrapping="Wrap" VerticalAlignment="Center" Text="" x:Name="effectDesc" Grid.Row="1" Grid.Column="1"></TextBlock>
+                        
+                    </Grid>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                    <Rectangle Margin="0 5 0 0" Height="1" Stroke="Gray"/>
+                    <Grid x:Name="propertysGrid">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                    
+
+                </StackPanel>
+            </ScrollViewer>
+            
+            <StackPanel Grid.Row="1" Grid.Column="1" FlowDirection="RightToLeft">
+                <Rectangle Margin="0 0 0 5" Height="1" Stroke="Gray"/>
+                <Grid Margin="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="1">حالت نمایش تصویر</TextBlock>
+                    <ComboBox x:Name="viewCombo" Grid.Row="1" Grid.Column="1" SelectionChanged="viewCombo_SelectionChanged"/>
+                    <Label>تعداد پردازش</Label>
+                    <TextBox x:Name="threadsTxt" Text="1" Grid.Column="1"/>
+                    <TextBlock Grid.Row="2">متد پردازش</TextBlock>
+                    <ComboBox SelectedIndex="0" x:Name="calcuMethodCombo" Grid.Row="2" Grid.Column="1">
+                        <ComboBoxItem>
+                            Task
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            Thread
+                        </ComboBoxItem>
+                    </ComboBox>
+                </Grid>
+                <Button x:Name="processBtn" Margin="0 0 0 10" Click="OnProcessClick">پردازش</Button>
+                <Canvas x:Name="progCanvas" Height="25px"  MinHeight="20px">
+                    <ProgressBar Height="{Binding ActualHeight,ElementName=progCanvas}" Width="{Binding ActualWidth,ElementName=progCanvas}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Name="prog"/>
+                    <Label x:Name="progLbl">
+                        آماده انجام
+                    </Label>
+                </Canvas>
+            </StackPanel>
+
+        </Grid>
+
+
+    </DockPanel>
+</Window>

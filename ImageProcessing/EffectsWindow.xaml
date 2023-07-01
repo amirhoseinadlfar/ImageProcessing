@@ -1,0 +1,54 @@
+﻿<Window x:Class="ImageProcessing.EffectsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ImageProcessing"
+        xmlns:localAssembly="clr-namespace:ImageProcessing.EffectSystem"
+        mc:Ignorable="d"
+        Title="EffectsWindows" Height="500" Width="500"
+        ResizeMode="NoResize"
+        Closing="Window_Closing"
+        Name="window">
+    <Grid FlowDirection="RightToLeft" Margin="10" >
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <TreeView ItemsSource="{Binding }" SelectedItemChanged="treeView_SelectedItemChanged" Grid.ColumnSpan="2" Grid.Column="0" x:Name="treeView">
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate DataType="{x:Type localAssembly:EffectAssembly}" ItemsSource="{Binding ImageProcessorUnits}">
+                    <TextBlock Text="{Binding Name}"/>
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+        </TreeView>
+        <StackPanel Margin="5"  Grid.Row="1" MinHeight="50px" Orientation="Horizontal">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0">نام:</Label>
+                <Label Grid.Row="1">توضیحات:</Label>
+                <Label Grid.Row="2">سازنده:</Label>
+
+                <TextBlock VerticalAlignment="Center" x:Name="nameTextBlock" Grid.Column="1" Grid.Row="0"></TextBlock>
+                <TextBlock VerticalAlignment="Center" x:Name="descTextBlock" Grid.Column="1" Grid.Row="1" TextWrapping="Wrap"></TextBlock>
+                <TextBlock VerticalAlignment="Center" x:Name="creatorTextBlock" Grid.Column="1" Grid.Row="2"></TextBlock>
+            </Grid>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="1">
+            <Button Margin="5" Click="AddProcessorClick">اضافه کردن مجموعه افکت</Button>
+            <Button Margin="5" Click="Button_Click">حذف مجموعه افکت</Button>
+        </StackPanel>
+    </Grid>
+</Window>
